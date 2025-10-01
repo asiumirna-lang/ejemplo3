@@ -85,4 +85,35 @@ if enviar:
     st.write(f"✅ Respuestas correctas: {correctas} de {len(preguntas)}")
 
     if correctas == len(preguntas):
-        st.success("🎉 ¡Felicidades! Ha
+        st.success("🎉 ¡Felicidades! Has respondido todo correctamente.")
+        
+        # Animación de libros cayendo
+        falling_books = """
+        <style>
+        @keyframes fall {
+            0% { top: -10%; opacity: 1; }
+            100% { top: 110%; opacity: 0; }
+        }
+        .book {
+            position: fixed;
+            top: -10%;
+            font-size: 30px;
+            animation: fall linear infinite;
+        }
+        </style>
+        <script>
+        function createBook() {
+            const book = document.createElement("div");
+            book.className = "book";
+            book.innerHTML = "📚";
+            book.style.left = Math.random() * 100 + "vw";
+            book.style.animationDuration = (2 + Math.random() * 3) + "s";
+            document.body.appendChild(book);
+            setTimeout(() => { book.remove(); }, 5000);
+        }
+        setInterval(createBook, 300);
+        </script>
+        """
+        st.markdown(falling_books, unsafe_allow_html=True)
+    else:
+        st.warning("❌ No acertaste todas. Inténtalo de nuevo.")
