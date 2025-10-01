@@ -1,13 +1,12 @@
+
 import streamlit as st
-import random
-import time
 
 st.set_page_config(page_title="Quiz de Derecho Laboral Peruano", layout="centered")
 
-st.title("📚 Quiz de Derecho Laboral Peruano")
-st.write("Responde correctamente todas las preguntas. Si aciertas todas, verás una lluvia de libros cayendo. 📖")
+st.title("⚖️ Quiz de Derecho Laboral Peruano")
+st.write("Responde todas las preguntas. Si aciertas todas correctamente, verás una lluvia de medallas cayendo 🏅.")
 
-# Preguntas y respuestas
+# --- Preguntas y respuestas ---
 preguntas = [
     {
         "pregunta": "¿Cuál es la jornada máxima laboral ordinaria en el Perú?",
@@ -69,6 +68,7 @@ preguntas = [
 respuestas_usuario = {}
 score = 0
 
+# --- Formulario para contestar ---
 with st.form("quiz_form"):
     for i, q in enumerate(preguntas):
         st.subheader(f"Pregunta {i+1}: {q['pregunta']}")
@@ -76,6 +76,7 @@ with st.form("quiz_form"):
         respuestas_usuario[i] = respuesta
     enviar = st.form_submit_button("Verificar respuestas")
 
+# --- Evaluación ---
 if enviar:
     correctas = 0
     for i, q in enumerate(preguntas):
@@ -85,35 +86,36 @@ if enviar:
     st.write(f"✅ Respuestas correctas: {correctas} de {len(preguntas)}")
 
     if correctas == len(preguntas):
-        st.success("🎉 ¡Felicidades! Has respondido todo correctamente.")
-        
-        # Animación de libros cayendo
-        falling_books = """
+        st.success("🎉 ¡Excelente! Has respondido todo correctamente. 🏅")
+
+        # --- Animación de medallas cayendo ---
+        falling_medals = """
         <style>
         @keyframes fall {
             0% { top: -10%; opacity: 1; }
             100% { top: 110%; opacity: 0; }
         }
-        .book {
+        .medal {
             position: fixed;
             top: -10%;
-            font-size: 30px;
+            font-size: 35px;
             animation: fall linear infinite;
         }
         </style>
         <script>
-        function createBook() {
-            const book = document.createElement("div");
-            book.className = "book";
-            book.innerHTML = "📚";
-            book.style.left = Math.random() * 100 + "vw";
-            book.style.animationDuration = (2 + Math.random() * 3) + "s";
-            document.body.appendChild(book);
-            setTimeout(() => { book.remove(); }, 5000);
+        function createMedal() {
+            const medal = document.createElement("div");
+            medal.className = "medal";
+            medal.innerHTML = "🏅";
+            medal.style.left = Math.random() * 100 + "vw";
+            medal.style.animationDuration = (2 + Math.random() * 3) + "s";
+            document.body.appendChild(medal);
+            setTimeout(() => { medal.remove(); }, 5000);
         }
-        setInterval(createBook, 300);
+        setInterval(createMedal, 300);
         </script>
         """
-        st.markdown(falling_books, unsafe_allow_html=True)
+        st.markdown(falling_medals, unsafe_allow_html=True)
+
     else:
-        st.warning("❌ No acertaste todas. Inténtalo de nuevo.")
+        st.warning("❌ No acertaste todas. Inténtalo nuevamente.")
